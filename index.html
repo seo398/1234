@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3대3 포켓몬 배틀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game-shell">
+    <section class="stage-wrap" aria-label="3대3 포켓몬 배틀 게임 화면">
+      <canvas id="battleCanvas" width="1280" height="720"></canvas>
+
+      <div class="topbar">
+        <div class="badge">3 VS 3</div>
+        <div id="turnLabel" class="turn-label">전투 준비</div>
+        <button id="musicButton" class="icon-button wide" type="button" title="배경음악 재생 또는 일시정지">음악</button>
+        <button id="settingsButton" class="icon-button" type="button" title="소리 설정 열기">설정</button>
+        <button id="restartButton" class="icon-button" type="button" title="처음부터 다시 시작">↻</button>
+      </div>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+      <div class="shop-panel" aria-label="상점">
+        <div class="shop-title">상점</div>
+        <div id="shopItems" class="shop-items"></div>
+      </div>
+
+      <div class="coin-hud" aria-label="코인 보유량">
+        <img src="assets/coins.png" alt="">
+        <div>
+          <span>보유 코인</span>
+          <strong id="coinAmount">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <aside class="control-panel" aria-label="전투 조작 패널">
+      <div class="team-board">
+        <div>
+          <h2>아군 팀</h2>
+          <div id="playerTeam" class="team-list"></div>
+        </div>
+        <div>
+          <h2>상대 팀</h2>
+          <div id="enemyTeam" class="team-list"></div>
+        </div>
+      </div>
+
+      <div class="active-card">
+        <div class="active-head">
+          <div>
+            <span class="eyebrow">현재 포켓몬</span>
+            <h1 id="activeName">-</h1>
+          </div>
+          <span id="activeType" class="type-pill">-</span>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-meta">
+            <span>HP</span>
+            <span id="hpText">0 / 0</span>
+          </div>
+          <div class="meter"><div id="hpBar" class="hp-fill"></div></div>
+        </div>
+        <div class="bar-wrap">
+          <div class="bar-meta">
+            <span>에너지</span>
+            <span id="energyText">0 / 100</span>
+          </div>
+          <div class="meter energy-meter"><div id="energyBar" class="energy-fill"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <h2>기술 선택</h2>
+        <div id="moveGrid" class="move-grid"></div>
+      </div>
+
+      <div>
+        <h2>교대</h2>
+        <div id="switchGrid" class="switch-grid"></div>
+      </div>
+
+      <div class="log-box">
+        <h2>전투 로그</h2>
+        <ol id="battleLog"></ol>
+      </div>
+    </aside>
+  </main>
+
+  <div id="settingsModal" class="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-settings></div>
+    <section class="settings-panel" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="settings-head">
+        <div>
+          <span class="eyebrow">오디오</span>
+          <h2 id="settingsTitle">소리 설정</h2>
+        </div>
+        <button id="closeSettingsButton" class="icon-button" type="button" title="설정 닫기">×</button>
+      </div>
+
+      <audio id="bgm" src="assets/battle-theme.mp3" loop preload="auto"></audio>
+
+      <label class="sound-row">
+        <span>
+          <strong>배경음악</strong>
+          <small id="musicState">대기 중</small>
+        </span>
+        <button id="modalMusicButton" class="pill-button" type="button">재생</button>
+      </label>
+
+      <label class="range-row">
+        <span>음악 볼륨</span>
+        <input id="musicVolume" type="range" min="0" max="100" value="55">
+        <output id="musicVolumeValue">55%</output>
+      </label>
+
+      <label class="range-row">
+        <span>효과음 볼륨</span>
+        <input id="sfxVolume" type="range" min="0" max="100" value="65">
+        <output id="sfxVolumeValue">65%</output>
+      </label>
+
+      <label class="toggle-row">
+        <span>
+          <strong>전체 음소거</strong>
+          <small>음악과 전투 효과음을 동시에 끕니다.</small>
+        </span>
+        <input id="muteToggle" type="checkbox">
+      </label>
+    </section>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
